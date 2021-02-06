@@ -24,7 +24,7 @@ if __name__ == '__main__':
             # Запросить данные о студенте.
             name = input("Введите фамилию и имя: ")
             group = input("Введите группу: ")
-            marks = input("Введите пять оценок в формате - 1 1 1: ")
+            marks = list(map(int, input("Введите пять оценок в формате - 1 2 3: ").split()))
 
             # Создать словарь.
             person = {
@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
             students.append(person)
             if len(students) > 1:
-                students.sort(key=lambda item: item.get('name', ''))
+                students.sort(key=lambda item: item.get('group', ''))
         elif command == 'list':
             line = '+-{}-+-{}-+-{}-+-{}-+-+-{}-+'.format(
                 '-' * 4,
@@ -68,11 +68,10 @@ if __name__ == '__main__':
         elif command.startswith('select '):
             parts = command.split(' ', maxsplit=2)
             period = int(parts[1])
-            ma = list(marks.split())
-            s = int(sum(ma))
+            s = float(sum(marks))
             count = 0
             for person in students:
-                if (s//5)>4:
+                if (s/len(marks))>4.0:
                     count += 1
                     print(
                         '{:>4}: {}'.format(count, person.get('name', ''))
